@@ -33,8 +33,8 @@
 											$rStop	= strtotime($ar['registration_stop']);
 											$iStart	= strtotime($ar['interview_start']);
 											$iStop	= strtotime($ar['interview_stop']);
-											$iTime	= $iStart <= time('now') && $iStop > time('now') ? true : false;
-											$rTime	= $rStart <= time('now') && $rStop > time('now') ? true : false;
+											$iTime	= $iStart <= time() && $iStop > time() ? true : false;
+											$rTime	= $rStart <= time() && $rStop > time() ? true : false;
 											$iCheck	= false;
 											$rCheck	= false;
 											if(count($register) > 0) {
@@ -56,13 +56,13 @@
 														<?php $type = false;
 														$diff = 0;
 														if(!$rCheck && $rTime) {
-															$diff	= $rStop - time('now');
+															$diff	= $rStop - time();
 															$type	= 'เวลาสมัคร ';
-															$percentage	= 100 - (((time('now') - $rStart) / ($rStop - $rStart)) * 100);
+															$percentage	= 100 - (((time() - $rStart) / ($rStop - $rStart)) * 100);
 														} else if($rCheck && !$iCheck && $iTime) {
-															$diff	= $iStop - time('now');
+															$diff	= $iStop - time();
 															$type	= 'เวลาจองรอบสัมภาษณ์ ';
-															$percentage	= 100 - (((time('now') - $iStart) / ($iStop - $iStart)) * 100);
+															$percentage	= 100 - (((time() - $iStart) / ($iStop - $iStart)) * 100);
 														}
 														if(!$iCheck && $type) {
 															$time	= $diff / (60 * 60 * 24);
@@ -89,8 +89,8 @@
 														<?php } ?>
 													</div>
 													<div class="align-items-end text-right">
-														<?php if($rStart > time('now')) {
-															$diff	= $rStart - time('now');
+														<?php if($rStart > time()) {
+															$diff	= $rStart - time();
 															$time	= $diff / (60 * 60 * 24);
 															if($time >= 1) {
 																$time	= round($time).' วัน';
@@ -103,7 +103,7 @@
 																}
 															} ?>
 															<small class="text-muted"><?php echo "เปิดรับสมัครในอีก {$time}"; ?></small><br/>
-														<?php } else if($rStop <= time('now') && !count($register)) { ?>
+														<?php } else if($rStop <= time() && !count($register)) { ?>
 															<small class="text-muted">หมดเขตรับสมัคร</small>
 														<?php } else if($rTime && !count($register)) { ?>
 															<a href="<?php echo site_url('scholarship/register/'.$ar['registration_id']); ?>" class="btn btn-sm btn-outline-primary">เขียนใบสมัคร</a>
@@ -115,10 +115,10 @@
 															$interview	= $this->Prepare_model->load_data('interview', 'interview_id', $register[0]['interview']);
 															$inStart		= strtotime($interview[0]['start']);
 															$inStop			= strtotime($interview[0]['stop']);
-															if($inStop <= time('now')) { ?>
+															if($inStop <= time()) { ?>
 																<small class="text-success"><i class="fas fa-check"></i> สมัครแล้ว</small>
 															<?php } else {
-																if($inStart > time('now')) { ?>
+																if($inStart > time()) { ?>
 																	<small class="text-success"><i class="fas fa-check"></i> รอสัมภาษณ์</small><br/>
 																<?php } else { ?>
 																	<small class="text-danger"> ถึงเวลาสัมภาษณ์แล้ว</small>
@@ -127,7 +127,7 @@
                                 echo $this->Prepare_model->date_between($inStart, $inStop);
 															}
 														} else if(!$iTime && count($register) && $rCheck && !$iCheck) {
-															$diff	= $iStart - time('now');
+															$diff	= $iStart - time();
 															$time	= $diff / (60 * 60 * 24);
 															if($time >= 1) {
 																$time	= round($time).' วัน';

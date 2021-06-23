@@ -101,8 +101,8 @@ class Prepare_model extends CI_Model {
 	public function displayDate($start, $stop = false, $color = true) {
 		$m	= ['ม.ค.','ก.พ','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'];
 
-		$text	= '<div class="date '.(!$color ?: ($start <= time('now') && $stop > time('now')  ? 'text-success' : 'text-muted')).'"><span>'.date('j ', $start).$m[date('n', $start) - 1].' '.(date('Y', $start) + 543 - 2500).' | '.date('G:i', $start).'</span></div>';
-		$text	.= $stop ? '<small><div class="date '.(!$color ?: ($start <= time('now') && $stop > time('now')  ? 'text-warning' : 'text-muted')).'"> <span>'.date('j ', $stop).$m[date('n', $stop) - 1].' '.(date('Y', $stop) + 543 - 2500).' | '.date('G:i', $stop).'</span></div></small>' : '';
+		$text	= '<div class="date '.(!$color ?: ($start <= time() && $stop > time()  ? 'text-success' : 'text-muted')).'"><span>'.date('j ', $start).$m[date('n', $start) - 1].' '.(date('Y', $start) + 543 - 2500).' | '.date('G:i', $start).'</span></div>';
+		$text	.= $stop ? '<small><div class="date '.(!$color ?: ($start <= time() && $stop > time()  ? 'text-warning' : 'text-muted')).'"> <span>'.date('j ', $stop).$m[date('n', $stop) - 1].' '.(date('Y', $stop) + 543 - 2500).' | '.date('G:i', $stop).'</span></div></small>' : '';
 		return $text;
 	}
   public function date_between ($start, $end) {
