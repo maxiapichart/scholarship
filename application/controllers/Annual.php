@@ -339,7 +339,7 @@ class Annual extends CI_Controller {
 				$ar	= [
 					'registration_id'	=> $registration_id,
 					'seat'	=> $v,
-					'interview_name'	=> $post['interview_name'][$k],
+					'interview_name'	=> (!!$post['interview_name'][$k] ? $post['interview_name'][$k] : null),
 					'start'	=> $this->switchdate($post['in_d'][$k])." {$post['in_h_start'][$k]}:{$post['in_m_start'][$k]}:00",
 					'stop'	=> $this->switchdate($post['in_d'][$k])." {$post['in_h_stop'][$k]}:{$post['in_m_stop'][$k]}:00",
 				];
@@ -370,6 +370,7 @@ class Annual extends CI_Controller {
 			// }
 			redirect('annual/?year='.$post['year']);
 		}
+    redirect();
 	}
 	private function switchdate($day) {
 		$day	= explode('-', $day);

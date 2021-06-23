@@ -123,7 +123,8 @@
 																<?php } else { ?>
 																	<small class="text-danger"> ถึงเวลาสัมภาษณ์แล้ว</small>
 																<?php }
-																echo $this->Prepare_model->displayDate($inStart, $inStop);
+                                echo !!$interview[0]['interview_name'] ? "<small>({$interview[0]['interview_name']})</small><br/>" : '';
+                                echo $this->Prepare_model->date_between($inStart, $inStop);
 															}
 														} else if(!$iTime && count($register) && $rCheck && !$iCheck) {
 															$diff	= $iStart - time('now');

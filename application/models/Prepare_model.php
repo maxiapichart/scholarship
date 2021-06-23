@@ -105,5 +105,8 @@ class Prepare_model extends CI_Model {
 		$text	.= $stop ? '<small><div class="date '.(!$color ?: ($start <= time('now') && $stop > time('now')  ? 'text-warning' : 'text-muted')).'"> <span>'.date('j ', $stop).$m[date('n', $stop) - 1].' '.(date('Y', $stop) + 543 - 2500).' | '.date('G:i', $stop).'</span></div></small>' : '';
 		return $text;
 	}
-  public function date_between ($start, $end) {}
+  public function date_between ($start, $end) {
+		$m	= ['ม.ค.','ก.พ','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'];
+    return '<span'.($start <= time() && $end > time() ? ' class="text-success"' : '').'>'.date('j ', $start).$m[date('n', $start) - 1].' '.(date('Y', $start) + 543 - 2500).' | '.date('G:i', $start).' - '.date('G:i', $end).'</span>';
+  }
 }

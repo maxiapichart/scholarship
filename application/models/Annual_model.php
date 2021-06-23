@@ -152,6 +152,7 @@ class Annual_model extends CI_Model {
 				GROUP BY r.interview
 			) AS r ON r.interview = i.interview_id
 			WHERE registration_id = {$registration_id}
+      ORDER BY i.start DESC, i.interview_name DESC
 		")->result_array();
 	}
 	public function find_name($psu) {
@@ -182,7 +183,7 @@ class Annual_model extends CI_Model {
 	}
 	public function load_inteview_student($registration_id) {
 		$student	= $this->db->query("
-			SELECT i.*, i2.start, i2.stop, r.student_id, i3.point, i3.comment
+			SELECT i.*, i2.start, i2.stop, i2.interview_name, r.student_id, i3.point, i3.comment
 			FROM interviewer AS i
 			LEFT JOIN interview AS i2 ON i2.interview_id = i.interview_id
 			LEFT JOIN register AS r ON r.interview = i.interview_id

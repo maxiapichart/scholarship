@@ -50,7 +50,8 @@
 															if($ar2['student_id'] != '') { ?>
 																<tr>
 																	<td align="center">
-																		<?php echo $this->Prepare_model->displayDate(strtotime($ar2['start']), strtotime($ar2['stop'])); ?>
+																		<?php echo !!$ar2['interview_name'] ? "<small>({$ar2['interview_name']})</small><br/>" : '';
+                                    echo $this->Prepare_model->date_between(strtotime($ar2['start']), strtotime($ar2['stop'])); ?>
 																	</td>
 																	<td align="right"><?php echo ++$i; ?></td>
 																	<td align="center"><a href="<?php echo site_url("annual/interviewer/{$ar['registration_id']}/{$ar2['student_id']}"); ?>"><?php echo $ar2['student_id']; ?></a></td>

@@ -29,6 +29,7 @@
 									</div>
 								<?php } ?>
 								<div class="col-4 date-holder text-right">
+                  <span><?php echo !!$ar['interview_name'] ? $ar['interview_name'] : ''; ?></span>
 									<div class="icon"><i class="icon-clock"></i></div>
 									<div class="pt-2 px-1"> <u><?php echo date('G:i', $start).' - '.date('G:i', $stop); ?></u></div>
 										<?php if($ar['student'] < $ar['seat']) { ?>
