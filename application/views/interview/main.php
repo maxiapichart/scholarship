@@ -49,7 +49,7 @@
 														foreach ($student as $ar2) {
 															if($ar2['student_id'] != '') { ?>
 																<tr>
-																	<td align="center">
+																	<td align="left">
 																		<?php echo !!$ar2['interview_name'] ? "<small>({$ar2['interview_name']})</small><br/>" : '';
                                     echo $this->Prepare_model->date_between(strtotime($ar2['start']), strtotime($ar2['stop'])); ?>
 																	</td>
