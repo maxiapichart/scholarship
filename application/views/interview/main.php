@@ -82,6 +82,9 @@
 		</div>
 	</section>
 </div>
+<?php 
+echo 'maxi';
+?>
 <script type="text/javascript">
 	<?php if(count($registration) == 0) { ?>
 		window.location = '<?php echo site_url('annual/interview/?year='); ?>' + ($('#year').val() - 1); 
