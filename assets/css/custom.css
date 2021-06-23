@@ -1,0 +1,27 @@
+/* your styles go here */
+body {
+	font-family: "Tahoma";
+}
+.nowrap {
+	white-space: nowrap;
+}
+.table-nowrap > thead > tr > th,
+.table-nowrap > thead > tr > td,
+.table-nowrap > tbody > tr > th,
+.table-nowrap > tbody > tr > td,
+.table-nowrap > tr > th,
+.table-nowrap > tr > td {
+	white-space: nowrap;
+	vertical-align: middle;
+}
+.border-3 {
+	border-width: 3px !important;
+}
+.table > thead > tr > td {
+	white-space: nowrap;
+}
+
+div.form-control {
+	white-space: nowrap;
+	background-color: #F8F8FF;
+}
