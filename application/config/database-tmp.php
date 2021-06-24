@@ -75,9 +75,9 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'						=> '',
-	'hostname'			=> 'localhost',
-	'username'			=> 'admin',
-	'password'			=> "220442",
+	'hostname'			=> 'student.psu.ac.th',
+	'username'			=> hex2bin('61646D696E'),
+	'password'			=> hex2bin('6B6B323534392324'),
 	'database'			=> 'scholarship',
 	'dbdriver'			=> 'mysqli',
 	'dbprefix'			=> '',
