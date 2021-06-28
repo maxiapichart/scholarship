@@ -503,6 +503,13 @@ function match_multiselect($select, $val) {
 								</div>
 							</div>
 						</div>
+						<?php if($this->session->userdata('user_type') === 'Admin') { ?>
+							<div class="py-4 p-xl-3">
+								<div class="row">
+									<div class="col-12 text-center"><a href="<?php echo $googledrive[0]['googledrive']; ?>" target="_blank">Google Drive</a></div>
+								</div>
+							</div>
+						<?php } ?>
 
 						<form action="<?php echo site_url('annual/ratings'); ?>" method="POST">
 							<input type="hidden" name="interview_id" value="<?php echo $interview['interview_id']; ?>">
