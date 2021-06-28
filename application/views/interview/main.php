@@ -51,10 +51,12 @@
 																<tr>
 																	<td align="center">
 																		<?php echo !!$ar2['interview_name'] ? "<small>({$ar2['interview_name']})</small><br/>" : '';
-                                    echo $this->Prepare_model->date_between(strtotime($ar2['start']), strtotime($ar2['stop'])); ?>
+																		echo $this->Prepare_model->date_between(strtotime($ar2['start']), strtotime($ar2['stop'])); ?>
 																	</td>
 																	<td align="right"><?php echo ++$i; ?></td>
-																	<td align="center"><a href="<?php echo site_url("annual/interviewer/{$ar['registration_id']}/{$ar2['student_id']}"); ?>"><?php echo $ar2['student_id']; ?></a></td>
+																	<td align="center">
+																		<a href="<?php echo site_url("annual/interviewer/{$ar['registration_id']}/{$ar2['student_id']}"); ?>"><?php echo $ar2['student_id']; ?></a>
+																	</td>
 																	<td><?php echo $ar2['student_name']; ?></td>
 																	<td><?php echo $ar2['fac_name']; ?></td>
 																	<td align="right"><?php echo $ar2['point'] != null ? "{$ar2['point']} คะแนน" : '-'; ?></td>
@@ -82,9 +84,6 @@
 		</div>
 	</section>
 </div>
-<?php 
-echo 'maxi';
-?>
 <script type="text/javascript">
 	<?php if(count($registration) == 0) { ?>
 		window.location = '<?php echo site_url('annual/interview/?year='); ?>' + ($('#year').val() - 1); 
