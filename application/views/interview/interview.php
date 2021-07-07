@@ -149,7 +149,7 @@ function match_multiselect($select, $val) {
 												<div class="col-auto"><span class="text-info">ตำแหน่ง</span>: <?php echo $family['data'][2][$num]['position']; ?></div>
 											<?php }
 											if($group[1] != 4) { ?>
-												<div class="col-auto"><span class="text-info">รายได้</span>: <?php echo number_format($family['data'][2][$num]['income']); ?> บาท</div>
+												<div class="col-auto"><span class="text-info">รายได้</span>: <?php echo number_format($family['data'][2][$num]['income']); ?> บาท/เดือน</div>
 											<?php }
 											if($group[1] == 1) { ?>
 												<div class="col-auto"><span class="text-info">ละเอียดของอาชีพ</span>: <?php echo $family['data'][2][$num]['detail']; ?></div>
@@ -178,7 +178,7 @@ function match_multiselect($select, $val) {
 												<div class="col-auto"><span class="text-info">ตำแหน่ง</span>: <?php echo $family['data'][2][$num]['position']; ?></div>
 											<?php }
 											if($group[1] != 4) { ?>
-												<div class="col-auto"><span class="text-info">รายได้</span>: <?php echo number_format($family['data'][2][$num]['income']); ?> บาท</div>
+												<div class="col-auto"><span class="text-info">รายได้</span>: <?php echo number_format($family['data'][2][$num]['income']); ?> บาท/เดือน</div>
 											<?php }
 											if($group[1] == 1) { ?>
 												<div class="col-auto"><span class="text-info">ละเอียดของอาชีพ</span>: <?php echo $family['data'][2][$num]['detail']; ?></div>
@@ -233,7 +233,7 @@ function match_multiselect($select, $val) {
 													<div class="col-auto"><span class="text-info">ตำแหน่ง</span>: <?php echo $family['data'][2][$num]['position']; ?></div>
 												<?php }
 												if($group[1] != 4) { ?>
-													<div class="col-auto"><span class="text-info">รายได้</span>: <?php echo number_format($family['data'][2][$num]['income']); ?> บาท</div>
+													<div class="col-auto"><span class="text-info">รายได้</span>: <?php echo number_format($family['data'][2][$num]['income']); ?> บาท/เดือน</div>
 												<?php }
 												if($group[1] == 1) { ?>
 													<div class="col-auto"><span class="text-info">ละเอียดของอาชีพ</span>: <?php echo $family['data'][2][$num]['detail']; ?></div>
@@ -328,7 +328,7 @@ function match_multiselect($select, $val) {
 											echo $property[0][$num]['number'].' ไร่'; $num++;
 										} else echo '-'; ?>
 									</div>
-									<div class="col-12 pt-1"><span class="text-info pl-3">อื่น: </span>
+									<div class="col-12 pt-1"><span class="text-info pl-3">อื่นๆ: </span>
 										<?php if(isset($property[0][0]) && ($property[0][0]['type'] == 0 && $property[0][0]['id'] == 0)) {
 											echo $property[0][0]['number']; $num++;
 										} else echo '-'; ?>
@@ -357,7 +357,7 @@ function match_multiselect($select, $val) {
 											echo $property[1][$num]['number'].' หลัง | '.number_format($property[1][$num]['budget']).' บาท/เดือน'; $num++;
 										} else echo '-'; ?>
 									</div>
-									<div class="col-12 pt-1"><span class="text-info pl-3">อื่น: </span>
+									<div class="col-12 pt-1"><span class="text-info pl-3">อื่นๆ: </span>
 										<?php if(isset($property[1][0]) && ($property[1][0]['type'] == 1 && $property[1][0]['id'] == 0)) {
 											echo $property[1][0]['number'].' | '.number_format($property[1][0]['budget']).' บาท/เดือน'; $num++;
 										} else echo '-'; ?>
@@ -378,7 +378,7 @@ function match_multiselect($select, $val) {
 									</div>
 									<div class="col-12 pt-1"><span class="text-info pl-3">ผ่อนบ้าน: </span>
 										<?php if(isset($property[2][$num]) && ($property[2][$num]['type'] == 2 && $property[2][$num]['id'] == 3)) {
-											echo $property[2][$num]['number'].' คัน | '.number_format($property[2][$num]['budget']).' บาท/เดือน'; $num++;
+											echo $property[2][$num]['number'].' หลัง | '.number_format($property[2][$num]['budget']).' บาท/เดือน'; $num++;
 										} else echo '-'; ?>
 									</div>
 									<div class="col-12 pt-1"><span class="text-info pl-3">ผ่อนที่ดิน: </span>
@@ -386,7 +386,7 @@ function match_multiselect($select, $val) {
 											echo $property[2][$num]['number'].' ไร่ | '.number_format($property[2][$num]['budget']).' บาท/เดือน'; $num++;
 										} else echo '-'; ?>
 									</div>
-									<div class="col-12 pt-1"><span class="text-info pl-3">อื่น: </span>
+									<div class="col-12 pt-1"><span class="text-info pl-3">อื่นๆ: </span>
 										<?php if(isset($property[2][0]) && ($property[2][0]['type'] == 2 && $property[2][0]['id'] == 0)) {
 											echo $property[2][0]['number'].' | '.number_format($property[2][0]['budget']).' บาท/เดือน'; $num++;
 										} else echo '-'; ?>
@@ -439,20 +439,52 @@ function match_multiselect($select, $val) {
 								<div class="col-12 text-primary"><h2>สถานภาพทางการเงินของนักศึกษา</h2></div>
 								<div class="col-12 pt-2"><b class="text-info">1. รายรับของนักศึกษา</b>
 									<div class="row pl-1">
-										<div class="col-12"><span class="text-info">บิดา-มารดา/ผู้อุปการะ</span>: <?php echo number_format($finance['data'][0]['income_parent']).' บาท/เดือน'; ?></div>
-										<div class="col-12"><span class="text-info">เงิน กยศ./กรอ.</span>: <?php echo number_format($finance['data'][0]['income_loan']).' บาท/เดือน'; ?></div>
-										<div class="col-12"><span class="text-info">ทำงานพิเศษและอื่นๆ</span>: <?php echo number_format($finance['data'][0]['income_job']).' บาท/เดือน'; ?></div>
-										<div class="col-12"><b class="text-info">รวม</b>: <?php echo number_format($finance['data'][0]['income_parent'] + $finance['data'][0]['income_loan'] + $finance['data'][0]['income_job']).' บาท/เดือน'; ?></div>
+										<div class="col-12">
+											<span class="text-info">บิดา-มารดา/ผู้อุปการะ</span>:
+											<?php echo !!$finance['data'][0]['income_parent'] ? number_format($finance['data'][0]['income_parent']).' บาท/เดือน' : '-'; ?>
+										</div>
+										<div class="col-12">
+											<span class="text-info">เงิน กยศ./กรอ.</span>:
+											<?php echo !!$finance['data'][0]['income_loan'] ? number_format($finance['data'][0]['income_loan']).' บาท/เดือน' : '-'; ?>
+										</div>
+										<div class="col-12">
+											<span class="text-info">ทำงานพิเศษและอื่นๆ</span>:
+											<?php echo !!$finance['data'][0]['income_job'] ? number_format($finance['data'][0]['income_job']).' บาท/เดือน' : '-'; ?>
+										</div>
+										<div class="col-12">
+											<b class="text-info">รวม</b>:
+											<?php $total_income = $finance['data'][0]['income_parent'] + $finance['data'][0]['income_loan'] + $finance['data'][0]['income_job'];
+											echo !!$total_income ? number_format($total_income).' บาท/เดือน' : '-'; ?>
+										</div>
 									</div>
 								</div>
 								<div class="col-12 pt-2"><b class="text-info">2. รายจ่ายของนักศึกษา</b>
 									<div class="row pl-1">
-										<div class="col-12"><span class="text-info">ค่าที่พัก</span>: <?php echo number_format($finance['data'][0]['outcome_rest']).' บาท/เดือน'; ?></div>
-										<div class="col-12"><span class="text-info">ค่าอาหาร</span>: <?php echo number_format($finance['data'][0]['outcome_food']).' บาท/เดือน'; ?></div>
-										<div class="col-12"><span class="text-info">ค่าอุปกรณ์การเรียน</span>: <?php echo number_format($finance['data'][0]['outcome_equipment']).' บาท/เดือน'; ?></div>
-										<div class="col-12"><span class="text-info">ค่าเดินทาง</span>: <?php echo number_format($finance['data'][0]['outcome_travel']).' บาท/เดือน'; ?></div>
-										<div class="col-12"><span class="text-info">อื่นๆ</span>: <?php echo $finance['data'][0]['outcome_specify'].' '.number_format($finance['data'][0]['outcome_other']).' บาท/เดือน'; ?></div>
-										<div class="col-12"><b class="text-info">รวม</b>: <?php echo number_format($finance['data'][0]['outcome_rest'] + $finance['data'][0]['outcome_food'] + $finance['data'][0]['outcome_equipment'] + $finance['data'][0]['outcome_travel'] + $finance['data'][0]['outcome_other']).' บาท/เดือน'; ?></div>
+										<div class="col-12">
+											<span class="text-info">ค่าที่พัก</span>:
+											<?php echo !!$finance['data'][0]['outcome_rest'] ? number_format($finance['data'][0]['outcome_rest']).' บาท/เดือน' : '-'; ?>
+										</div>
+										<div class="col-12">
+											<span class="text-info">ค่าอาหาร</span>:
+											<?php echo !!$finance['data'][0]['outcome_food'] ? number_format($finance['data'][0]['outcome_food']).' บาท/เดือน' : '-'; ?>
+										</div>
+										<div class="col-12">
+											<span class="text-info">ค่าอุปกรณ์การเรียน</span>:
+											<?php echo !!$finance['data'][0]['outcome_equipment'] ? number_format($finance['data'][0]['outcome_equipment']).' บาท/เดือน' : '-'; ?>
+										</div>
+										<div class="col-12">
+											<span class="text-info">ค่าเดินทาง</span>:
+											<?php echo !!$finance['data'][0]['outcome_travel'] ? number_format($finance['data'][0]['outcome_travel']).' บาท/เดือน' : '-'; ?>
+										</div>
+										<div class="col-12">
+											<span class="text-info">อื่นๆ</span>:
+											<?php echo !!$finance['data'][0]['outcome_other'] ? $finance['data'][0]['outcome_specify'].' '.number_format($finance['data'][0]['outcome_other']).' บาท/เดือน' : '-'; ?>
+										</div>
+										<div class="col-12">
+											<b class="text-info">รวม</b>:
+											<?php $total_outcome = $finance['data'][0]['outcome_rest'] + $finance['data'][0]['outcome_food'] + $finance['data'][0]['outcome_equipment'] + $finance['data'][0]['outcome_travel'] + $finance['data'][0]['outcome_other'];
+											echo !!$total_outcome ? number_format($total_outcome).' บาท/เดือน' : '-'; ?>
+										</div>
 									</div>
 								</div>
 								<div class="col-12 pt-2"><b class="text-info">3. ประมาณการค่าใช้จ่ายทั้งหมดที่นักศึกษาคาดว่าจะเพียงพอสำหรับตนเอง</b>: <?php echo number_format($finance['data'][0]['outcome_total']).' บาท/เดือน'; ?></div>
@@ -465,7 +497,7 @@ function match_multiselect($select, $val) {
 										</div>
 									<?php } ?>
 								</div>
-								<div class="col-12 pt-1"><b class="text-info pl-3">4.2 ทุนการศึกษา-ย้อนหลัง 2 ปี (ไม่รวม กยศ./กรอ.)</b><?php echo count($finance['data'][2]) == 0 ? ': -' : '';
+								<div class="col-12 pt-1"><b class="text-info pl-3">4.2 ทุนการศึกษา ที่เคยได้รับในมหาวิทยาลัย <small>(ไม่รวม กยศ./กรอ.)</small></b><?php echo count($finance['data'][2]) == 0 ? ': -' : '';
 									$num = 0;
 									foreach ($finance['data'][2] as $v) { ?>
 										<div class="row pl-1">
@@ -516,12 +548,12 @@ function match_multiselect($select, $val) {
 							<input type="hidden" name="student_id" value="<?php echo $student_id; ?>">
 							<div class="row justify-content-center">
 								<div class="col-lg-6">
-									<textarea name="comment" class="form-control" placeholder="ใส่ความคิดเห็น"><?php echo $interview['comment']; ?></textarea>
+									<textarea name="comment" class="form-control" placeholder="ใส่ความคิดเห็น" rows="5"><?php echo $interview['comment']; ?></textarea>
 									<div class="input-group">
 										<div class="input-group-prepend">
 											<div class="input-group-text form-control shadow">ให้คะแนน</div>
 										</div>
-										<input name="point" class="form-control form-control text-right shadow w-50" type="text" placeholder="0" onkeyup="" required value="<?php echo $interview['point']; ?>">
+										<input name="point" class="form-control form-control text-right shadow w-50" type="text" placeholder="0" onkeyup="" required value="<?php echo $interview['point']; ?>" pattern="^(?:[0,4](?:\.00?)?|[0-3](?:\.[0-9][0-9]?)?|\.[0-9][0-9]?)$" oninvalid="this.setCustomValidity('กรอกตัวเลข 0-4 มีทศนิยมไม่เกิน 2 ตำแหน่ง')" oninput="this.setCustomValidity('')">
 										<!-- <input name="point" class="form-control form-control text-right shadow w-50" type="text" min="0" pattern="\d*" maxlength="3" placeholder="0" onkeyup="numberformat(this);" required value="<?php //echo $interview['point']; ?>"> -->
 										<div class="input-group-prepend">
 											<div class="input-group-text form-control shadow">คะแนน</div>

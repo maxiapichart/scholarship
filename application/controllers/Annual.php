@@ -315,7 +315,6 @@ class Annual extends CI_Controller {
 	public function actionRegistration() {
 		if($this->input->post()) {
 			$post	= $this->input->post();
-			print_r($post);
 			$ar	= [
 				'registration_title'	=> $post['registration_title'],
 				'campus_id'						=> '00',
