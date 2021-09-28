@@ -101,7 +101,6 @@
 				{ data: 'province_name', className: 'nowrap'},
 				{ data: null, className: 'text-center nowrap',
 					render: function(data, type, full) {
-						console.log(data)
 						return (type == 'display' ? (!!data['interview_name'] ? `(<small>${data['interview_name']})</small><br/>` : '') + date_between(data['start'], data['stop']) : data['start']);
 					}
 				},
