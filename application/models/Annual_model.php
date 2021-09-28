@@ -121,14 +121,15 @@ class Annual_model extends CI_Model {
   }
   public function load_interviewee_id($interview_id, $student_id) {
     return $this->db->query(
-      "SELECT e.interview_id, e.student_id, e.username, e.point, e.comment
-      FROM interviewee AS e
-      WHERE e.student_id = '{$student_id}' AND e.interview_id = {$interview_id}
-      UNION
-      SELECT r.interview_id, '{$student_id}' AS student_id, r.username, e.point, e.comment
-      FROM interviewer AS r
-      LEFT JOIN interviewee AS e ON e.interview_id = r.interview_id AND e.username = r.username
-      WHERE r.interview_id = {$interview_id}"
+      "SELECT ie.*
+      FROM interviewee AS ie
+      LEFT JOIN interviewer AS i ON ie.interview_id = i.interview_id AND ie.username = i.username
+      WHERE ie.student_id = '{$student_id}' AND ie.interview_id = {$interview_id}
+      UNION ALL
+      SELECT i.interview_id, '{$student_id}' AS student_id, i.username, NULL AS point, NULL AS comment
+      FROM interviewee AS ie
+      RIGHT JOIN interviewer AS i ON ie.interview_id = i.interview_id and ie.username = i.username and ie.student_id = '{$student_id}'
+      WHERE i.interview_id = '{$interview_id}' AND ie.interview_id IS NULL"
     )->result_array();
   }
   public function load_interview($registration_id) {
