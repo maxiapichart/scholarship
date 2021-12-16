@@ -195,8 +195,10 @@
   <div class="m-0 p-0 pl-2 card-footer text-left btn btn-link" data-toggle="collapse" data-target="#sec1Col1" aria-expanded="false" aria-controls="sec1Col1" onclick="toggleCollapseIcon('#sec1Col1', '#sec1Icon1');"><i id="sec1Icon1" class="fas fa-chevron-down"></i></div>
 </div>
 <script type="text/javascript">
-  profile()
-  find_name()
+  $(() => {
+    profile()
+    find_name()
+  })
 
   function profile() {
     $.ajax({
@@ -272,7 +274,7 @@
           student_id: $('#friend-studentID').val()
         },
         success: function(result) {
-          is_valid('#friend-studentID', (result ? true : false))
+          is_valid('#friend-studentID', !!result)
           if (result) {
             $('#friend-name').html(result)
           } else {
