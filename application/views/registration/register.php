@@ -324,7 +324,7 @@
                                   <div class="input-group-text form-control-sm">อายุ</div>
                                 </div>
                                 <input name="fyear" type="hidden" value="<?php echo substr($family[0]['BIRTH_DATE'], -4) + 543; ?>">
-                                <div class="form-control form-control-sm input-block"><?php echo date('Y') - substr($family[0]['BIRTH_DATE'], -4); ?></div>
+                                <div class="form-control form-control-sm input-block" id="f-age"><?php echo date('Y') - substr($family[0]['BIRTH_DATE'], -4); ?></div>
                                 <div class="input-group-prepend">
                                   <div class="input-group-text form-control-sm">ปี</div>
                                 </div>
@@ -400,7 +400,7 @@
                                   <div class="input-group-text form-control-sm">อายุ</div>
                                 </div>
                                 <input name="myear" type="hidden" value="<?php echo substr($family[1]['BIRTH_DATE'], -4) + 543; ?>">
-                                <div class="form-control form-control-sm input-block"><?php echo date('Y') - substr($family[1]['BIRTH_DATE'], -4); ?></div>
+                                <div class="form-control form-control-sm input-block" id="m-age"><?php echo date('Y') - substr($family[1]['BIRTH_DATE'], -4); ?></div>
                                 <div class="input-group-prepend">
                                   <div class="input-group-text form-control-sm">ปี</div>
                                 </div>
@@ -1211,6 +1211,16 @@
     '<i class="fas fa-minus-circle text-warning"></i>'
   ];
 
+  $(() => {
+    profile()
+    family()
+    sibling()
+    check_sibling()
+    finance()
+    explain()
+    certificate()
+  })
+
   function toggleCollapseIcon(collapse, id) {
     $(collapse).on('shown.bs.collapse', function() {
       $(id).removeClass('fa-chevron-down')
@@ -1222,7 +1232,6 @@
     });
   }
 
-  profile()
 
   function profile() {
     $.ajax({
@@ -1325,9 +1334,6 @@
     'working': 0,
     'relative': 0
   }
-  family()
-  sibling()
-  check_sibling()
 
   function family() {
     $.ajax({
@@ -1360,14 +1366,15 @@
           result[0]['pstatus'] != 2 ? $('#patron').addClass('d-none') : $('#patron').removeClass('d-none');
 
           parent = ['f', 'm', 'p', 'c']
+          console.log('parent', result[1])
           $.each(result[1], function(i, ar) {
             p = parent[ar['parent']];
-            if (p != 'f' && p != 'm') {
-              $('#family [name="' + p + 'fname"]').val(ar['fname']);
-              $('#family [name="' + p + 'sname"]').val(ar['sname']);
-              $('#family [name="' + p + 'year"]').val(parseInt(ar['year']) + 543);
-              age(p)
-            }
+            // if (p != 'f' && p != 'm') {
+            $('#family [name="' + p + 'fname"]').val(ar['fname']);
+            $('#family [name="' + p + 'sname"]').val(ar['sname']);
+            $('#family [name="' + p + 'year"]').val(parseInt(ar['year']) + 543);
+            age(p)
+            // }
             $('#family [name="' + p + 'number"]').val(ar['number']);
           })
 
@@ -1519,9 +1526,10 @@
         $('#sibling [name="' + p + '[year][' + i + ']"]').val('')
       }
     } else {
-      $('#' + p + '-age').html($('#family [name=' + p + 'year]').val().length == 4 ? (543 + <?php echo date('Y'); ?> - $('#family [name=' + p + 'year]').val()) : '')
-      if ($('#family [name=' + p + 'year]').val().length == 4 && ($('#' + p + '-age').text() < 15 || $('#' + p + '-age').text() > 120)) {
-        alert_modal('อายุไม่ควรน้อยกว่า 15 ปี หรือมากกว่า 120 ปี', 'orange', true)
+      ageCal = $('#family [name=' + p + 'year]').val().length == 4 ? (543 + <?php echo date('Y'); ?> - $('#family [name=' + p + 'year]').val()) : ''
+      $('#' + p + '-age').html(ageCal)
+      console.log('#' + p + '-age', ageCal)
+      if ($('#family [name=' + p + 'year]').val().length == 4 && (ageCal < 15 || ageCal > 120)) {
         $('#' + p + '-age').html('')
         $('#family [name=' + p + 'year]').val('')
       }
@@ -1789,7 +1797,6 @@
     'scholarship': 0,
     'job': 0
   }
-  finance()
 
   function finance() {
     $.ajax({
@@ -1953,7 +1960,6 @@
     $('.' + type).append(text);
   }
 
-  explain()
 
   function explain() {
     $.ajax({
@@ -1974,7 +1980,6 @@
       }
     })
   }
-  certificate()
 
   function certificate() {
     $.ajax({

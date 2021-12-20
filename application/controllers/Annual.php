@@ -268,7 +268,7 @@ class Annual extends CI_Controller {
     if ($this->input->post()) {
       $post  = $this->input->post();
       $this->Prepare_model->delete_data('certificate', ['registration_id', 'student_id'], [$post['registration_id'], $post['student_id']]);
-      for ($i = 0; $i < 7; $i++) {
+      for ($i = 0; $i < 8; $i++) {
         $ar[$i]  = [
           'registration_id'  => $post['registration_id'],
           'student_id'      => $post['student_id'],
