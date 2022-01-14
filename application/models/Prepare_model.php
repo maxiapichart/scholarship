@@ -98,15 +98,18 @@ class Prepare_model extends CI_Model {
     return count($result) > 0 ? $result[0]['FULL_NAME'] : false;
   }
 
-  public function displayDate($start, $stop = false, $color = true) {
+  public function displayDate($start, $stop = false, $color = true, $time = true) {
     $m  = ['ม.ค.', 'ก.พ', 'มี.ค.', 'เม.ย.', 'พ.ค.', 'มิ.ย.', 'ก.ค.', 'ส.ค.', 'ก.ย.', 'ต.ค.', 'พ.ย.', 'ธ.ค.'];
+    $now = time();
 
-    $text  = '<div class="date ' . (!$color ?: ($start <= time() && $stop > time()  ? 'text-success' : 'text-muted')) . '"><span>' . date('j ', $start) . $m[date('n', $start) - 1] . ' ' . (date('Y', $start) + 543 - 2500) . ' | ' . date('G:i', $start) . '</span></div>';
-    $text  .= $stop ? '<small><div class="date ' . (!$color ?: ($start <= time() && $stop > time()  ? 'text-warning' : 'text-muted')) . '"> <span>' . date('j ', $stop) . $m[date('n', $stop) - 1] . ' ' . (date('Y', $stop) + 543 - 2500) . ' | ' . date('G:i', $stop) . '</span></div></small>' : '';
+    $text  = '<div class="date ' . (!$color ?: ($start <= $now && $stop > $now  ? 'text-success' : 'text-muted')) . '"><span>' . date('j ', $start) . $m[date('n', $start) - 1] . ' ' . (date('Y', $start) + 543 - 2500) . ($time ? ' | ' . date('G:i', $start) : '') . '</span></div>';
+    $text  .= $stop ? '<small><div class="date ' . (!$color ?: ($start <= $now && $stop > $now  ? 'text-warning' : 'text-muted')) . '"> <span>' . date('j ', $stop) . $m[date('n', $stop) - 1] . ' ' . (date('Y', $stop) + 543 - 2500) . ($time ? ' | ' . date('G:i', $stop) : '') . '</span></div></small>' : '';
     return $text;
   }
   public function date_between($start, $end) {
     $m  = ['ม.ค.', 'ก.พ', 'มี.ค.', 'เม.ย.', 'พ.ค.', 'มิ.ย.', 'ก.ค.', 'ส.ค.', 'ก.ย.', 'ต.ค.', 'พ.ย.', 'ธ.ค.'];
-    return '<span' . ($start <= time() && $end > time() ? ' class="text-success"' : '') . '>' . date('j ', $start) . $m[date('n', $start) - 1] . ' ' . (date('Y', $start) + 543 - 2500) . ' | ' . date('G:i', $start) . ' - ' . date('G:i', $end) . '</span>';
+    $now = time();
+
+    return '<span' . ($start <= $now && $end > $now ? ' class="text-success"' : '') . '>' . date('j ', $start) . $m[date('n', $start) - 1] . ' ' . (date('Y', $start) + 543 - 2500) . ' | ' . date('G:i', $start) . ' - ' . date('G:i', $end) . '</span>';
   }
 }

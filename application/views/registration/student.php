@@ -14,7 +14,7 @@
               <option value="2" <?php echo $get['apply'] != 2 ?: ' selected'; ?>>ส่งใบสมัครแล้ว</option>
             </select>
             <div class="table-responsive pt-2">
-              <table id="list" class="table table-striped table-bordered">
+              <table id="list" class="table table-striped table-bordered table-sm">
                 <thead class="thead-dark">
                   <tr>
                     <td></td>
@@ -23,8 +23,8 @@
                     <td>คณะ</td>
                     <td>สมัครเมื่อ</td>
                     <td>เอกสารเพิ่มเติม</td>
+                    <td>สถานะ/วันสอบสัมภาษณ์</td>
                     <td></td>
-                    <td>วันสัมภาษณ์</td>
                   </tr>
                 </thead>
               </table>
@@ -89,6 +89,53 @@
   </div>
 </div>
 
+<div class="modal fade" id="modalEdit" tabindex="-1" role="dialog" aria-labelledby="modalEditLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalEditLabel">จัดการสถานะ <span class="student_id">-</span></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form onsubmit="formEditSubmit()" id="form-edit" action="javascript:void(0)">
+        <input type="hidden" name="registration_id" value="<?php echo $registration_id; ?>">
+        <input type="hidden" name="student_id">
+        <div class="modal-body">
+          <div class="custom-control custom-switch text-right">
+            <input type="checkbox" class="custom-control-input" id="registered" name="register" onchange="onRegisterChange(this.checked)" />
+            <label class="custom-control-label" for="registered">ส่งใบสมัครแล้ว</label>
+          </div>
+          <div class="form-check text-center">
+            <input class="form-check-input" style="cursor: pointer" type="radio" name="interview" id="interview_id_none" value="false" checked>
+            <label class="form-check-label text-danger" style="cursor: pointer" for="interview_id_none">ไม่เลือกวันสัมภาษณ์</label>
+          </div>
+          <div id="interviews" style="height: 50vh; overflow-y: auto" class="d-none px-3">
+            <?php $prevDate = null;
+            $m  = ['ม.ค.', 'ก.พ', 'มี.ค.', 'เม.ย.', 'พ.ค.', 'มิ.ย.', 'ก.ค.', 'ส.ค.', 'ก.ย.', 'ต.ค.', 'พ.ย.', 'ธ.ค.'];
+            foreach ($interviews as $interview) {
+              $start = strtotime($interview['start']);
+              $stop = strtotime($interview['stop']);
+              if ($date !== $start) {
+                $date = $start; ?>
+                <h6 class="text-center text-muted pt-5"><?php echo $this->Prepare_model->displayDate($start, $stop, false); ?></h6>
+              <?php } ?>
+              <div class="form-check text-right border-bottom">
+                <input class="form-check-input" style="cursor: pointer" type="radio" name="interview" id="interview_id_<?php echo $interview['interview_id']; ?>" value="<?php echo $interview['interview_id']; ?>">
+                <label class="form-check-label" style="cursor: pointer" for="interview_id_<?php echo $interview['interview_id']; ?>"><?php echo $interview['interview_name']; ?></label>
+              </div>
+            <?php } ?>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">ปิด</button>
+          <button type="submit" class="btn btn-primary">บันทึก</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
 <script type="text/javascript">
   var month = ['ม.ค.', 'ก.พ', 'มี.ค.', 'เม.ย.', 'พ.ค.', 'มิ.ย.', 'ก.ค.', 'ส.ค.', 'ก.ย.', 'ต.ค.', 'พ.ย.', 'ธ.ค.']
   $(function() {
@@ -132,7 +179,7 @@
           data: 'student_id',
           className: 'nowrap',
           render: function(data, type, full) {
-            return (type == 'display' ? '<a href="<?php echo site_url('annual/register/' . $registration_id . '/'); ?>' + data + '<?php echo $get['apply'] != '' ? "/?apply={$get['apply']}" : ''; ?>">' + data + '</a>' : data);
+            return (type == 'display' ? '<a href="<?php echo site_url('annual/register/' . $registration_id . '/'); ?>' + data + '<?php echo $get['apply'] != '' ? "/?apply={$get['apply']}" : ''; ?>" target="_blank">' + data + '</a>' : data);
           }
         },
         {
@@ -160,24 +207,24 @@
           }
         },
         {
-          data: 'register',
-          className: 'text-right nowrap',
+          data: null,
+          className: 'text-center nowrap',
           render: function(data, type, full) {
-            return data != null ? 'ส่งใบสมัครแล้ว' : 'ยังไม่ส่งใบสมัคร';
+            return data['interview'] != null ?
+              date(data['start']) :
+              data['register'] != null ?
+              'ส่งใบสมัครแล้ว<br/><span class="text-danger">ยังไม่จองวันสัมภาษณ์</span>' :
+              '<span class="text-danger">ยังไม่ส่งใบสมัคร</span>'
           }
         },
         {
           data: null,
-          className: 'text-right nowrap',
+          className: 'nowrap',
           render: function(data, type, full) {
-            return data['interview'] != null ? date(data['start']) : 'ยังไม่จองวันสัมภาษณ์';
+            return `<button class="btn btn-sm btn-link text-primary" onclick="modalEdit('${data['student_id']}','${data['interview']}','${data['start']}',${!!data['register']})"><i class="fas fa-user-edit"></i></button>`
           }
-        }
+        },
       ],
-      rowCallback: function(row, data, index) {
-        $(row).find('td:eq(6)').css('color', data['register'] == null ? 'red' : '');
-        $(row).find('td:eq(7)').css('color', data['interview'] == null ? 'red' : '');
-      }
     })
     $('#list').DataTable().on('order.dt search.dt', function() {
       $('#list').DataTable().column(0, {
@@ -189,13 +236,53 @@
     }).draw()
   }
 
-  function modalCer(registration_id, student_id) { // empty in case the columns change
+  function modalEdit(student_id, interview, start, register) {
+    $('.student_id').html(student_id)
+    $('[name="student_id"]').val(student_id)
+    $('#form-edit #registered').prop('checked', register)
+    $('#form-edit #interview_id_' + interview).prop('checked', true)
+    onRegisterChange(register)
+    $('#modalEdit').modal('show')
+  }
+
+  function formEditSubmit() {
+    const registration_id = $('#form-edit [name="registration_id"]').val()
+    const student_id = $('#form-edit [name="student_id"]').val()
+    const register = !!$('#form-edit [name="register"]:checked').val()
+    const interview = $('#form-edit [name="interview"]:checked').val()
+    data = {
+      registration_id,
+      student_id,
+      register,
+      interview,
+    }
+    $.ajax({
+      method: 'POST',
+      url: '<?php echo site_url('annual/edit_register'); ?>',
+      data,
+      success: function(result) {
+        $('#list').DataTable().ajax.reload()
+        $('#modalEdit').modal('hide')
+      }
+    })
+  }
+
+  function onRegisterChange(checked) {
+    if (checked) {
+      $('#interviews').removeClass('d-none')
+    } else {
+      $('#interviews').addClass('d-none');
+      $('#interview_id_none').prop('checked', true)
+    }
+  }
+
+  function modalCer(registration_id, student_id) {
     $.ajax({
       method: 'POST',
       url: '<?php echo site_url('annual/load_certificate'); ?>',
       data: {
-        registration_id: registration_id,
-        student_id: student_id,
+        registration_id,
+        student_id,
       },
       success: function(result) {
         result = JSON.parse(result)

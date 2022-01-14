@@ -243,4 +243,17 @@ class Annual_model extends CI_Model {
 			ORDER BY CASE WHEN s.selectdata_group IS NULL THEN 1 ELSE 0 END, s.selectdata_group"
     )->result_array();
   }
+  public function load_interviews($registration_id) {
+    return $this->db->query(
+      "SELECT i.*, r.total
+      FROM interview i
+      LEFT JOIN (
+        SELECT COUNT(r.student_id) AS total, r.interview
+        FROM register r
+        GROUP BY r.interview
+      ) r ON r.interview = i.interview_id
+      WHERE i.registration_id = '{$registration_id}'
+      ORDER BY i.start, i.interview_name"
+    )->result_array();
+  }
 }

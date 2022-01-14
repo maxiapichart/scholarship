@@ -188,11 +188,20 @@ class Annual extends CI_Controller {
     $registration_id != '' ?: redirect();
     $registration  = $registration_id != 0 ? $this->Prepare_model->load_data('registration', 'registration_id', $registration_id) : [];
     $data['certificate']      = $this->Annual_model->load_select('certificate');
+    $data['interviews']      = $this->Annual_model->load_interviews($registration_id);
     $data['registration_id']  = $registration_id;
     $data['breadcrumb']        = ['วันสมัคร | รอบสัมภาษณ์' => 'annual'];
     $data['title']            = "รายชื่อนักศึกษา  \"{$registration[0]['registration_title']}\"";
     $data['content']          = 'registration/student';
     $this->load->view('include/layout', $data);
+  }
+  public function edit_register() {
+    $post = $this->input->post();
+    $ar = [
+      'register' => $post['register'] === 'false' ? null : 1,
+      'interview' => $post['interview'] === 'false' ? null : $post['interview'],
+    ];
+    $update = $this->Prepare_model->update_data('register', ['registration_id', 'student_id'], [$post['registration_id'], $post['student_id']], $ar);
   }
   public function find_name() {
     echo $this->Annual_model->find_name($this->input->post('psu'));
