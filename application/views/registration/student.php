@@ -24,7 +24,7 @@
                     <td>สมัครเมื่อ</td>
                     <td>เอกสารเพิ่มเติม</td>
                     <td>สถานะ/วันสอบสัมภาษณ์</td>
-                    <td></td>
+                    <td width="1"></td>
                   </tr>
                 </thead>
               </table>
@@ -102,29 +102,41 @@
         <input type="hidden" name="registration_id" value="<?php echo $registration_id; ?>">
         <input type="hidden" name="student_id">
         <div class="modal-body">
-          <div class="custom-control custom-switch text-right">
-            <input type="checkbox" class="custom-control-input" id="registered" name="register" onchange="onRegisterChange(this.checked)" />
-            <label class="custom-control-label" for="registered">ส่งใบสมัครแล้ว</label>
+          <div class="custom-control custom-switch text-center text-muted mb-3">
+            <input type="checkbox" class="custom-control-input" id="registered" name="register" onchange="onRegisterChange(this.checked)" style="cursor: pointer" />
+            <label class="custom-control-label" for="registered" style="cursor: pointer">ส่งใบสมัครแล้ว</label>
           </div>
-          <div class="form-check text-center">
+          <div class="form-check text-right">
             <input class="form-check-input" style="cursor: pointer" type="radio" name="interview" id="interview_id_none" value="false" checked>
             <label class="form-check-label text-danger" style="cursor: pointer" for="interview_id_none">ไม่เลือกวันสัมภาษณ์</label>
           </div>
-          <div id="interviews" style="height: 50vh; overflow-y: auto" class="d-none px-3">
-            <?php $prevDate = null;
-            $m  = ['ม.ค.', 'ก.พ', 'มี.ค.', 'เม.ย.', 'พ.ค.', 'มิ.ย.', 'ก.ค.', 'ส.ค.', 'ก.ย.', 'ต.ค.', 'พ.ย.', 'ธ.ค.'];
-            foreach ($interviews as $interview) {
-              $start = strtotime($interview['start']);
-              $stop = strtotime($interview['stop']);
-              if ($date !== $start) {
-                $date = $start; ?>
-                <h6 class="text-center text-muted pt-5"><?php echo $this->Prepare_model->displayDate($start, $stop, false); ?></h6>
+          <div id="interviews" style="height: 50vh" class="table-responsive d-none px-3">
+            <table class="table table-sm table-borderless">
+              <?php $prevDate = null;
+              $m  = ['ม.ค.', 'ก.พ', 'มี.ค.', 'เม.ย.', 'พ.ค.', 'มิ.ย.', 'ก.ค.', 'ส.ค.', 'ก.ย.', 'ต.ค.', 'พ.ย.', 'ธ.ค.'];
+              foreach ($interviews as $interview) {
+                $start = strtotime($interview['start']);
+                $stop = strtotime($interview['stop']);
+                if ($date !== $start) {
+                  $date = $start; ?>
+                  <tr class="bg-light">
+                    <td colspan="3">
+                      <h6 class="text-center text-muted"><?php echo $this->Prepare_model->displayDate($start, $stop, false); ?></h6>
+                    </td>
+                  </tr>
+                <?php } ?>
+                <tr class="border-bottom">
+                  <td><?php echo "{$interview['seat']}/{$interview['total']}"; ?></td>
+                  <td><?php echo $interview['interview_name']; ?></td>
+                  <td width="1">
+                    <div class=" form-check form-check-inline">
+                      <input class="form-check-input position-static" type="radio" style="cursor: pointer" name="interview" id="interview_id_<?php echo $interview['interview_id']; ?>" value="<?php echo $interview['interview_id']; ?>" />
+                      <label class="form-check-label" for="interview_id_<?php echo $interview['interview_id']; ?>" style="cursor: pointer">เลือก</label>
+                    </div>
+                  </td>
+                </tr>
               <?php } ?>
-              <div class="form-check text-right border-bottom">
-                <input class="form-check-input" style="cursor: pointer" type="radio" name="interview" id="interview_id_<?php echo $interview['interview_id']; ?>" value="<?php echo $interview['interview_id']; ?>">
-                <label class="form-check-label" style="cursor: pointer" for="interview_id_<?php echo $interview['interview_id']; ?>"><?php echo $interview['interview_name']; ?></label>
-              </div>
-            <?php } ?>
+            </table>
           </div>
         </div>
         <div class="modal-footer">
@@ -220,6 +232,8 @@
         {
           data: null,
           className: 'nowrap',
+          searchable: false,
+          orderable: false,
           render: function(data, type, full) {
             return `<button class="btn btn-sm btn-link text-primary" onclick="modalEdit('${data['student_id']}','${data['interview']}','${data['start']}',${!!data['register']})"><i class="fas fa-user-edit"></i></button>`
           }
